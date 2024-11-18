@@ -2,30 +2,40 @@ package rpg_lab;
 
 import org.example.Axe;
 import org.example.Dummy;
-import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 
 public class AxeTest {
+    private static final int AXE_ATTACK = 10;
+    private static final int AXE_DURABILITY = 1;
+    private static final int DUMMY_HEALTH = 20;
+    private static final int DUMMY_XP = 10;
+    private static final int EXPECTED_DURABILITY = AXE_DURABILITY - 1;
+
+    private Axe axe;
+    private Dummy dummy;
+
+    @Before
+    public void initializeTestObjects(){
+        this.axe = new Axe(AXE_ATTACK, AXE_DURABILITY);
+        this.dummy = new Dummy(DUMMY_HEALTH, DUMMY_XP);
+    }
 
     @Test
     public void weaponAttacksLosesDurability(){
-        Axe axe = new Axe(10, 10);
-        Dummy dummy = new Dummy(10, 10);
+        this.axe.attack(this.dummy);
 
-        axe.attack(dummy);
-
-        Assert.assertEquals(9, axe.getDurabilityPoints());
+        Assertions.assertEquals(EXPECTED_DURABILITY,
+                this.axe.getDurabilityPoints(),
+                "Wrong durability, ");
     }
 
     @Test
     public void brokenWeaponCantAttack(){
-        Assert.assertThrows(IllegalStateException.class, () -> { // Assert
-            // Arrange
-            Axe axe = new Axe(10, 1);
-            Dummy dummy = new Dummy(10, 10);
-            // Act
-            axe.attack(dummy);
-            axe.attack(dummy);
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            this.axe.attack(this.dummy);
+            this.axe.attack(this.dummy);
         });
     }
 }
