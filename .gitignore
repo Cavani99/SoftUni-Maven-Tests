@@ -1,0 +1,23 @@
+# Ignore IntelliJ project-specific files
+/**/workspace.xml
+/**/usage.statistics.xml
+/**/shelf/
+/**/libraries/
+
+
+# Ignore .iml files
+*.iml
+
+
+# Ignore build directories
+/out/
+target/
+build/
+.idea/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+#exclude zip files
+*.zip
