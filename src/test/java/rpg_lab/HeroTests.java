@@ -5,52 +5,21 @@ import org.example.Target;
 import org.example.Weapon;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.mockito.Mockito;
 
 public class HeroTests {
 
     @Test
     public void attackGainsXPIfTargetIsDead(){
-        Target fakeTarget = new Target() {
-            @Override
-            public void takeAttack(int attackPoints) {
 
-            }
+        Weapon weaponMock = Mockito.mock(Weapon.class);
+        Target targetMock = Mockito.mock(Target.class);
+        Mockito.when(targetMock.isDead()).thenReturn(true);
+        Mockito.when(targetMock.giveExperience()).thenReturn(10);
 
-            @Override
-            public int getHealth() {
-                return 0;
-            }
+        Hero hero = new Hero("Roger", weaponMock);
+        hero.attack(targetMock);
 
-            @Override
-            public int giveExperience() {
-                return 10;
-            }
-
-            @Override
-            public boolean isDead() {
-                return true;
-            }
-        };
-
-        Weapon fakeWeapon = new Weapon() {
-            @Override
-            public void attack(Target target) {
-
-            }
-
-            @Override
-            public int getAttackPoints() {
-                return 10;
-            }
-
-            @Override
-            public int getDurabilityPoints() {
-                return 0;
-            }
-        };
-
-        Hero hero = new Hero("Roger", fakeWeapon);
-        hero.attack(fakeTarget);
         Assertions.assertEquals(10, hero.getExperience(), "Wrong experience");
     }
 
