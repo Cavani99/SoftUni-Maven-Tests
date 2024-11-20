@@ -25,7 +25,6 @@ public class DatabaseTests {
     @Test
     public void arrayMustBe16Integers() throws OperationNotSupportedException {
 
-
         this.database.add(15);
         Assertions.assertEquals(16, this.database.getElements().length, "Elements are not 16");
         Assertions.assertEquals(Integer.class.getSimpleName(),  this.database.getElements()[0].getClass().getSimpleName());
